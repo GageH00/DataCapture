@@ -20,8 +20,6 @@ The project is built with **Java 21**, **JavaFX**, **JavaCV/OpenCV**, **JDBC**, 
 - [Build and Run](#build-and-run)
 - [Packaging](#packaging)
 - [Development Notes](#development-notes)
-- [Troubleshooting](#troubleshooting)
-- [Future Improvement Ideas](#future-improvement-ideas)
 
 ---
 
