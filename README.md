@@ -1,4 +1,4 @@
-ComicDataCapture is a JavaFX desktop application for capturing structured comic intake data alongside camera image records. It is designed for workflows where an operator needs to define intake fields, run capture sessions, associate images with each item, store the data locally, and export the results for downstream processing.
+DataCapture is a JavaFX desktop application for capturing structured comic intake data alongside camera image records. It is designed for workflows where an operator needs to define intake fields, run capture sessions, associate images with each item, store the data locally, and export the results for downstream processing.
 
 The project is built with **Java 21**, **JavaFX**, **JavaCV/OpenCV**, **JDBC**, **H2**, **PostgreSQL**, **Gson**, and **Apache POI**.
 
