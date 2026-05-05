@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<!--
+  End-of-session view.
+  Shows a read-only summary of the completed session, then offers:
+    • Export CSV    — saves a timestamped CSV to a location the operator picks
+    • Push to DB    — sends data to a remote PostgreSQL server
+    • New Session   — returns to the landing view for another run
+-->
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.comicdatacapture.comicdatacapture.controller.sessionEndController"
+            prefWidth="900" prefHeight="640">
+    <padding><Insets top="32" right="40" bottom="32" left="40"/></padding>
+
+    <top>
+        <VBox spacing="6" BorderPane.alignment="CENTER_LEFT">
+            <padding><Insets bottom="20"/></padding>
+            <Label text="Session Complete"
+                   style="-fx-font-size: 26px; -fx-font-weight: bold;"/>
+            <Label text="Review the summary below, then export or start a new session."
+                   style="-fx-font-size: 13px; -fx-text-fill: #616161;"/>
+        </VBox>
+    </top>
+
+    <center>
+        <VBox spacing="16" VBox.vgrow="ALWAYS">
+
+            <!-- Summary card -->
+            <VBox spacing="14"
+                  style="-fx-border-color: #e0e0e0; -fx-border-radius: 8;
+                         -fx-background-color: white; -fx-background-radius: 8;">
+                <padding><Insets top="20" right="24" bottom="20" left="24"/></padding>
+
+                <Label text="Session Summary"
+                       style="-fx-font-size: 15px; -fx-font-weight: bold;"/>
+                <Separator/>
+
+                <javafx.scene.layout.GridPane hgap="24" vgap="10">
+                    <Label text="Session ID"         style="-fx-text-fill:#757575;" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+                    <Label fx:id="summarySessionId"  GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+
+                    <Label text="Started"            style="-fx-text-fill:#757575;" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+                    <Label fx:id="summaryStarted"    GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+
+                    <Label text="Ended"              style="-fx-text-fill:#757575;" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+                    <Label fx:id="summaryEnded"      GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+
+                    <Label text="Total Batches"      style="-fx-text-fill:#757575;" GridPane.columnIndex="0" GridPane.rowIndex="3"/>
+                    <Label fx:id="summaryBatches"    GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+
+                    <Label text="Total Entries"      style="-fx-text-fill:#757575;" GridPane.columnIndex="0" GridPane.rowIndex="4"/>
+                    <Label fx:id="summaryEntries"    GridPane.columnIndex="1" GridPane.rowIndex="4"/>
+
+                    <Label text="Images Captured"    style="-fx-text-fill:#757575;" GridPane.columnIndex="0" GridPane.rowIndex="5"/>
+                    <Label fx:id="summaryImages"     GridPane.columnIndex="1" GridPane.rowIndex="5"/>
+
+                    <Label text="Output Folder"      style="-fx-text-fill:#757575;" GridPane.columnIndex="0" GridPane.rowIndex="6"/>
+                    <Label fx:id="summaryOutputFolder" GridPane.columnIndex="1" GridPane.rowIndex="6"
+                           style="-fx-font-size:11px;" wrapText="true" maxWidth="500"/>
+                </javafx.scene.layout.GridPane>
+            </VBox>
+
+            <!-- Export card -->
+            <VBox spacing="14"
+                  style="-fx-border-color: #e0e0e0; -fx-border-radius: 8;
+                         -fx-background-color: white; -fx-background-radius: 8;">
+                <padding><Insets top="20" right="24" bottom="20" left="24"/></padding>
+
+                <Label text="Export Data"
+                       style="-fx-font-size: 15px; -fx-font-weight: bold;"/>
+                <Separator/>
+
+                <Label text="Export this session's entries and image paths to a file, or push directly to a remote database."
+                       style="-fx-font-size: 12px; -fx-text-fill: #616161;" wrapText="true"/>
+
+                <HBox spacing="12" alignment="CENTER_LEFT">
+
+                    <!-- CSV -->
+                    <VBox spacing="6" HBox.hgrow="ALWAYS"
+                          style="-fx-border-color: #e8e8e8; -fx-border-radius: 6;
+                                 -fx-background-color: #fafafa; -fx-background-radius: 6;">
+                        <padding><Insets top="14" right="16" bottom="14" left="16"/></padding>
+                        <Label text="CSV File"
+                               style="-fx-font-weight: bold; -fx-font-size: 13px;"/>
+                        <Label text="One row per entry. Opens in Excel, Numbers, or any spreadsheet app."
+                               style="-fx-font-size: 11px; -fx-text-fill: #757575;" wrapText="true"/>
+                        <Button text="⬇  Export CSV"
+                                onAction="#onExportCsv"
+                                prefHeight="36" maxWidth="Infinity"
+                                style="-fx-font-weight: bold;"/>
+                    </VBox>
+
+                    <!-- Push to Postgres -->
+                    <VBox spacing="6" HBox.hgrow="ALWAYS"
+                          style="-fx-border-color: #e8e8e8; -fx-border-radius: 6;
+                                 -fx-background-color: #fafafa; -fx-background-radius: 6;">
+                        <padding><Insets top="14" right="16" bottom="14" left="16"/></padding>
+                        <Label text="PostgreSQL Push"
+                               style="-fx-font-weight: bold; -fx-font-size: 13px;"/>
+                        <Label text="Replays all inserts into a remote shared database. Idempotent — safe to run multiple times."
+                               style="-fx-font-size: 11px; -fx-text-fill: #757575;" wrapText="true"/>
+                        <Button text="⬆  Push to Remote DB"
+                                onAction="#onExportToPostgres"
+                                prefHeight="36" maxWidth="Infinity"
+                                style="-fx-font-weight: bold;"/>
+                    </VBox>
+
+                </HBox>
+
+                <!-- Status label shown after export attempts -->
+                <Label fx:id="exportStatusLabel" text=""
+                       style="-fx-font-size: 12px;" wrapText="true"/>
+
+            </VBox>
+
+        </VBox>
+    </center>
+
+    <bottom>
+        <HBox alignment="CENTER_RIGHT">
+            <padding><Insets top="24"/></padding>
+            <Button text="Start New Session"
+                    onAction="#onNewSession"
+                    prefWidth="180" prefHeight="38"
+                    style="-fx-font-weight: bold; -fx-font-size: 14px;"/>
+        </HBox>
+    </bottom>
+
+</BorderPane>

@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.comicdatacapture.comicdatacapture.controller.sessionController"
+            prefWidth="1280" prefHeight="860">
+    <padding><Insets top="18" right="20" bottom="14" left="20"/></padding>
+
+    <!-- TOP: title + badges -->
+    <top>
+        <VBox spacing="8" BorderPane.alignment="CENTER_LEFT">
+            <padding><Insets bottom="10"/></padding>
+            <Label text="Active Intake Session"
+                   style="-fx-font-size: 22px; -fx-font-weight: bold;"/>
+            <HBox spacing="14" alignment="CENTER_LEFT">
+                <Label fx:id="sessionIdLabel" text="Session: —"
+                       style="-fx-border-color: #bdbdbd; -fx-border-radius: 20;
+                              -fx-background-radius: 20; -fx-padding: 4 12 4 12;"/>
+                <Label fx:id="batchCountLabel" text="Batches captured: 0"
+                       style="-fx-border-color: #bdbdbd; -fx-border-radius: 20;
+                              -fx-background-radius: 20; -fx-padding: 4 12 4 12;"/>
+                <Label fx:id="statusLabel" text="" style="-fx-font-size: 12px;"/>
+            </HBox>
+        </VBox>
+    </top>
+
+    <!-- CENTER: cameras top, fields bottom -->
+    <center>
+        <VBox spacing="12" VBox.vgrow="ALWAYS">
+
+            <!-- ══ CAMERAS ══ -->
+            <HBox spacing="12">
+
+                <!-- Camera A card -->
+                <VBox spacing="6" HBox.hgrow="ALWAYS"
+                      style="-fx-border-color: #e0e0e0; -fx-border-radius: 8;
+                             -fx-background-color: white; -fx-background-radius: 8;">
+                    <padding><Insets top="12" right="12" bottom="12" left="12"/></padding>
+
+                    <!-- Header row: name + state badge -->
+                    <HBox spacing="10" alignment="CENTER_LEFT">
+                        <Label fx:id="cameraALabel" text="Camera A"
+                               style="-fx-font-size: 14px; -fx-font-weight: bold;"/>
+                        <Label fx:id="cameraAStateLabel" text="Not captured"
+                               style="-fx-font-size: 11px; -fx-text-fill: #9e9e9e;
+                                      -fx-border-color: #e0e0e0; -fx-border-radius: 10;
+                                      -fx-background-radius: 10; -fx-padding: 2 10 2 10;"/>
+                    </HBox>
+
+                    <!-- Preview -->
+                    <StackPane fx:id="cameraAPane"
+                               style="-fx-background-color: #f0f0f0; -fx-border-color: #bdbdbd;
+                                      -fx-border-radius: 4; -fx-background-radius: 4;">
+                        <ImageView fx:id="cameraAImageView"
+                                   fitWidth="560" fitHeight="300"
+                                   preserveRatio="true"
+                                   StackPane.alignment="CENTER"/>
+                        <Label fx:id="cameraAOverlay" text="No signal"
+                               style="-fx-text-fill: #9e9e9e;"/>
+                    </StackPane>
+
+                    <!-- Capture + Discard row -->
+                    <HBox spacing="8" alignment="CENTER_LEFT">
+                        <Button fx:id="captureAButton" text="Capture Camera A"
+                                onAction="#onCaptureA"
+                                HBox.hgrow="ALWAYS" maxWidth="Infinity" prefHeight="36"
+                                style="-fx-background-color: #c62828; -fx-text-fill: white;
+                                       -fx-font-weight: bold; -fx-font-size: 13px;
+                                       -fx-background-radius: 4;"/>
+                        <!--
+                          Discard button — hidden until a capture exists.
+                          Deletes the file from disk and resumes live feed.
+                          Controller toggles visibility via discardAButton.setVisible(bool).
+                        -->
+                        <Button fx:id="discardAButton" text="✕ Discard"
+                                onAction="#onDiscardA"
+                                prefHeight="36" prefWidth="90"
+                                visible="false"/>
+                    </HBox>
+                </VBox>
+
+                <!-- Camera B card -->
+                <VBox spacing="6" HBox.hgrow="ALWAYS"
+                      style="-fx-border-color: #e0e0e0; -fx-border-radius: 8;
+                             -fx-background-color: white; -fx-background-radius: 8;">
+                    <padding><Insets top="12" right="12" bottom="12" left="12"/></padding>
+
+                    <HBox spacing="10" alignment="CENTER_LEFT">
+                        <Label fx:id="cameraBLabel" text="Camera B"
+                               style="-fx-font-size: 14px; -fx-font-weight: bold;"/>
+                        <Label fx:id="cameraBStateLabel" text="Not captured"
+                               style="-fx-font-size: 11px; -fx-text-fill: #9e9e9e;
+                                      -fx-border-color: #e0e0e0; -fx-border-radius: 10;
+                                      -fx-background-radius: 10; -fx-padding: 2 10 2 10;"/>
+                    </HBox>
+
+                    <StackPane fx:id="cameraBPane"
+                               style="-fx-background-color: #f0f0f0; -fx-border-color: #bdbdbd;
+                                      -fx-border-radius: 4; -fx-background-radius: 4;">
+                        <ImageView fx:id="cameraBImageView"
+                                   fitWidth="560" fitHeight="300"
+                                   preserveRatio="true"
+                                   StackPane.alignment="CENTER"/>
+                        <Label fx:id="cameraBOverlay" text="No signal"
+                               style="-fx-text-fill: #9e9e9e;"/>
+                    </StackPane>
+
+                    <HBox spacing="8" alignment="CENTER_LEFT">
+                        <Button fx:id="captureBButton" text="Capture Camera B"
+                                onAction="#onCaptureB"
+                                HBox.hgrow="ALWAYS" maxWidth="Infinity" prefHeight="36"
+                                style="-fx-background-color: #c62828; -fx-text-fill: white;
+                                       -fx-font-weight: bold; -fx-font-size: 13px;
+                                       -fx-background-radius: 4;"/>
+                        <Button fx:id="discardBButton" text="✕ Discard"
+                                onAction="#onDiscardB"
+                                prefHeight="36" prefWidth="90"
+                                visible="false"/>
+                    </HBox>
+                </VBox>
+
+            </HBox>
+
+            <!-- ══ FIELDS CARD ══ -->
+            <VBox spacing="0" VBox.vgrow="ALWAYS"
+                  style="-fx-border-color: #e0e0e0; -fx-border-radius: 8;
+                         -fx-background-color: white; -fx-background-radius: 8;">
+                <padding><Insets top="14" right="16" bottom="14" left="16"/></padding>
+
+                <HBox alignment="CENTER_LEFT" spacing="16">
+                    <padding><Insets bottom="10"/></padding>
+                    <VBox spacing="2" HBox.hgrow="ALWAYS">
+                        <Label text="Item Data"
+                               style="-fx-font-size: 15px; -fx-font-weight: bold;"/>
+                        <Label text="Fill in the fields below. Capture each camera, then save."
+                               style="-fx-font-size: 11px; -fx-text-fill: #757575;"/>
+                    </VBox>
+
+                    <Button fx:id="saveEntryButton" text="Save Entry"
+                            onAction="#onSaveEntry"
+                            prefWidth="160" prefHeight="36"
+                            disable="true"
+                            style="-fx-font-size: 13px; -fx-font-weight: bold;
+                                   -fx-background-radius: 4;"/>
+                </HBox>
+
+                <Separator/>
+
+                <ScrollPane fitToWidth="true" VBox.vgrow="ALWAYS"
+                            style="-fx-background: transparent;
+                                   -fx-background-color: transparent;
+                                   -fx-border-color: transparent;">
+                    <padding><Insets top="10"/></padding>
+                    <VBox fx:id="dynamicFieldsContainer" spacing="0">
+                        <padding><Insets top="4" right="4" bottom="4" left="2"/></padding>
+                    </VBox>
+                </ScrollPane>
+
+            </VBox>
+
+        </VBox>
+    </center>
+
+    <!-- BOTTOM: end session -->
+    <bottom>
+        <HBox alignment="CENTER_LEFT">
+            <padding><Insets top="12"/></padding>
+            <Button fx:id="endSessionButton" text="End Session"
+                    onAction="#onEndSession"
+                    prefWidth="140" prefHeight="34"/>
+        </HBox>
+    </bottom>
+
+</BorderPane>

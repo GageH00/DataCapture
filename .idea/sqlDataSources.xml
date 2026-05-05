@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DdlMappings">
+    <mapping uuid="68791f19-8590-48c7-aef6-f4a761f4cb4a" name="postgres@localhost Mapping">
+      <data-sources db="fa46b5ed-d0d7-477f-a80e-2e394d5f78ab" ddl="6c383121-3feb-4600-b76f-ecc492a57142" />
+      <scope>
+        <node kind="database" negative="1" />
+      </scope>
+    </mapping>
+  </component>
+  <component name="SqlDataSourceStorage">
+    <option name="dataSources">
+      <list>
+        <State>
+          <option name="id" value="6c383121-3feb-4600-b76f-ecc492a57142" />
+          <option name="name" value="DDL data source" />
+          <option name="dbmsName" value="POSTGRES" />
+          <option name="urls">
+            <array>
+              <option value="file://$PROJECT_DIR$/db/comicIntake.ddl" />
+            </array>
+          </option>
+          <option name="outLayout" value="File per object by schema.groovy" />
+        </State>
+      </list>
+    </option>
+  </component>
+</project>
