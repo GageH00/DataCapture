@@ -555,7 +555,7 @@ Install:
 
 Verify Java:
 java --version
-
+ 
 Expected major version:
 21
 
